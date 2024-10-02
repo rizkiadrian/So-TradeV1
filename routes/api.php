@@ -10,4 +10,6 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function() {
     Route::get('/info', [InfoController::class, 'show']);
+    Route::get('/test-success-response', [InfoController::class, 'testSuccessResponse']);
+    Route::get('/test-fail-response', [InfoController::class, 'testFailResponse']);
 });

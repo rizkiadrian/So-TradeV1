@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Responses\ApiResponse;
 
 class InfoController extends Controller
 {
@@ -20,4 +21,29 @@ class InfoController extends Controller
         ];
         return response()->json($data, 200);
     }
+
+    /**
+     * Return a successful response with a message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function testSuccessResponse() {
+        $dataToReturn = [
+            "message" => "Hello SoTradeV1"
+        ];
+        return ApiResponse::success($dataToReturn);
+    }
+
+    /**
+     * Return a failed response with a message
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function testFailResponse() {
+        $errorToReturn = [
+            "message" => "Alert SoTradeV1"
+        ];
+        return ApiResponse::fail($errorToReturn);
+    }
+    
 }
