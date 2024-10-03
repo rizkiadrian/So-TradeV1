@@ -45,5 +45,16 @@ class InfoController extends Controller
         ];
         return ApiResponse::fail($errorToReturn);
     }
+
+    /**
+     * Check protected route
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function testProtectedRoute(Request $request) {
+        $dataToReturn = $request->user();
+        return ApiResponse::success($dataToReturn);
+    }
     
 }
