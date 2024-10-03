@@ -3,9 +3,15 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\AuthenticationException;
 
-// App custom middleware
-use App\Http\Middleware\Authenticate;
+
+use App\Exceptions\CustomValidationException;
+use App\Exceptions\GlobalException;
+use App\Exceptions\AuthenticationException as InternalAuthException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -16,10 +22,19 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
-        $middleware->appendToGroup('auth::guard', [
-            Authenticate::class
-        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            return (new InternalAuthException())->render($request, $e);
+        });
+
+        $exceptions->render(function (ValidationException $e, Request $request) {
+            return (new CustomValidationException)->render($request, $e);
+        });
+
+        $exceptions->render(function (Exception $e, Request $request) {
+            return (new GlobalException())->render($request, $e);
+        });
+
+        
     })->create();
