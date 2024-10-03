@@ -46,6 +46,15 @@ class AuthController extends Controller
         return ApiResponse::success($result, 'User created successfully', 201);
     }
 
+    /**
+     * Logs in an existing user with the given request data.
+     * 
+     * This endpoint handles the login of an existing user.
+     * 
+     * @param LoginRequest $request Instance of App\Http\Requests\LoginRequest
+     * 
+     * @return JsonResponse
+     */
     public function login (LoginRequest $request) {
         // Create an object from the validated request data
         $loginData= (object) $request->validated();
