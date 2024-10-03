@@ -36,7 +36,7 @@ class ApiResponse {
      * @param int $statusCode
      * @return JsonResponse
      */
-    public static function fail($error = null, $message = 'An Error occured', $statusCode = 400) {
+    public static function fail($error = null, $statusCode = 400, $message = 'An Error occured') {
         $apiResponse = [
             "meta" => [
                 "message" => $message,

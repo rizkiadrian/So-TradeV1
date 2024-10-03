@@ -19,7 +19,7 @@ class Authenticate
     {
         // If the user is not authenticated, return an unauthorized response
         if (!$request->user()) {
-            return ApiResponse::fail(['message' => 'Unauthorized'], null, 401);
+            return ApiResponse::fail(['message' => 'Unauthorized'], 401);
         }
 
         // Otherwise, continue with the request
