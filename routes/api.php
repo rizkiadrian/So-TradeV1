@@ -23,6 +23,7 @@ Route::prefix('v1')->group(function() {
     // Protected routes
     Route::middleware(['auth:sanctum'])->group(function() {
         Route::get('/test-protected-route', [InfoController::class, 'testProtectedRoute']);
+        Route::post('/profile/make', [ProfileController::class, 'profileCreate']);
     });
 
     // Check financial user middleware
