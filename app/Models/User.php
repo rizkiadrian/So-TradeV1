@@ -45,4 +45,54 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's profile.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    /**
+     * Get the user's employment.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function employment()
+    {
+        return $this->hasOne(UserEmployment::class);
+    }
+
+    /**
+     * Get the user's finance.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function finances()
+    {
+        return $this->hasOne(UserFinance::class);
+    }
+
+    /**
+     * Get the user's goals.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function goals()
+    {
+        return $this->hasMany(UserGoal::class);
+    }
+
+    /**
+     * Get the user's financial issues.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function issues()
+    {
+        return $this->hasMany(UserIssue::class);
+    }
 }

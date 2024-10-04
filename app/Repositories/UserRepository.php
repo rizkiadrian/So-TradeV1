@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use App\Enums\TokenAbility;
+
 class UserRepository {
     /**
      * Find a user by the given email address.
@@ -41,7 +43,9 @@ class UserRepository {
      */
     public function createSuperToken(User $user)
     {
-        return $user->createToken('SoTradeV1-Admin', ['*'])->plainTextToken;
+        $appname = env('ADMIN_APPNAME');
+        $abilities = [TokenAbility::SUPER_ADMIN->value];
+        return $user->createToken($appname, $abilities)->plainTextToken;
     }
 
     /**
