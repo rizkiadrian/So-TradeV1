@@ -12,6 +12,7 @@ use Illuminate\Auth\AuthenticationException;
 use App\Exceptions\CustomValidationException;
 use App\Exceptions\GlobalException;
 use App\Exceptions\AuthenticationException as InternalAuthException;
+use App\Exceptions\NotFoundException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,8 +23,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        // $middleware->append(CheckFinancialUser::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            return (new NotFoundException())->render($request, $e);
+        });
+
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             return (new InternalAuthException())->render($request, $e);
         });
