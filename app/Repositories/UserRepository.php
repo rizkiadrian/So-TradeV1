@@ -49,6 +49,19 @@ class UserRepository {
     }
 
     /**
+     * Create a new personal token for the given user that can access the profile features of the client app.
+     *
+     * @param  \App\Models\User  $user
+     * @return string
+     */
+    public function createProfileToken(User $user)
+    {
+        $appname = env('CLIENT_APPNAME');
+        $abilities = [TokenAbility::PROFILE_USER->value];
+        return $user->createToken($appname, $abilities)->plainTextToken;
+    }
+
+    /**
      * Attempt to login a user with the given credentials
      *
      * @param array $credentials

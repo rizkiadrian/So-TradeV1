@@ -62,7 +62,7 @@ class AuthController extends Controller
         // Attempt to log the user in
         if ($this->userRepository->attemptLogin($request->only('email', 'password'))) {
             $user = $this->userRepository->findByEmail($request->email);
-            $token = $this->userRepository->createSuperToken($user); // Specify abilities here
+            $token = $this->userRepository->createProfileToken($user); // Specify abilities here
             $collect = [
                 "user" => $user,
                 "token" => $token
