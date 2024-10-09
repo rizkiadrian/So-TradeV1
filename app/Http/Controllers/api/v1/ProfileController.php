@@ -6,15 +6,18 @@ use App\Helpers\TransactionHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserProfileRequest;
 use App\Http\Requests\UserEmploymentRequest;
+use App\Http\Requests\UserFinancialRequest;
 
 use App\Http\Responses\ApiResponse;
 use App\Repositories\UserProfileRepository;
 use App\Repositories\UserEmploymentRepository;
+use App\Repositories\UserFinancialRepository;
 
 class ProfileController extends Controller
 {
     protected $userProfileRepository;
     protected $userEmploymentRepository;
+    protected $userFinancialRepository;
 
     /**
      * Dependency injection via constructor.
@@ -23,11 +26,13 @@ class ProfileController extends Controller
      */
     public function __construct(
         UserProfileRepository $userProfileRepository,
-        UserEmploymentRepository $userEmploymentRepository
+        UserEmploymentRepository $userEmploymentRepository,
+        UserFinancialRepository $userFinancialRepository
         ) 
     {
         $this->userProfileRepository = $userProfileRepository;
         $this->userEmploymentRepository = $userEmploymentRepository;
+        $this->userFinancialRepository = $userFinancialRepository;
     }
     public function index()
     {
@@ -85,5 +90,27 @@ class ProfileController extends Controller
     
         return ApiResponse::success($result, 'User Employment created successfully', 201);
 
+    }
+
+    /**
+     * Create a new user financial.
+     * 
+     * This endpoint handles the creation of a new user financial.
+     * 
+     * @param UserFinancialRequest $request Instance of App\Http\Requests\UserFinancialRequest
+     * 
+     * @return JsonResponse
+     */
+    public function financialCreate(UserFinancialRequest $request)
+    {
+        // Create an object from the validated request data
+        $financialData = (object) $request->validated();
+
+        $result = TransactionHelper::execute(function () use ($financialData) {
+            // Attempt to create the user
+                return $this->userFinancialRepository->create($financialData);
+        });
+
+        return ApiResponse::success($result, 'User Financial created successfully', 201);
     }
 }

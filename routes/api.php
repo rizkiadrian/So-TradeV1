@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function() {
         Route::get('/test-protected-route', [InfoController::class, 'testProtectedRoute']);
         Route::post('/profile/make', [ProfileController::class, 'profileCreate']);
         Route::post('/profile/employment-make', [ProfileController::class, 'employmentCreate']);
+        Route::post('/profile/financial-make', [ProfileController::class, 'financialCreate']);
     });
 
     // Check financial user middleware
