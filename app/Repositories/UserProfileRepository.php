@@ -5,7 +5,21 @@ namespace App\Repositories;
 use App\Models\UserProfile;
 use Illuminate\Support\Facades\Auth;
 
+use App\Mail\WelcomeEmail;
+use Illuminate\Support\Facades\Mail;
+
 class UserProfileRepository {
+    protected $model;
+
+    /**
+     * Constructor.
+     *
+     * @param UserProfile $model The user profile model that will be used to interact with the database.
+     */
+    public function __construct(UserProfile $model)
+    {
+        $this->model = $model;
+    }
     
     /**
      * Create a new user profile.
@@ -19,7 +33,7 @@ class UserProfileRepository {
     public function create($data): UserProfile {
         $userId = Auth::user()->id;
         
-        return UserProfile::firstOrCreate(
+        return $this->model->firstOrCreate(
             ['user_id' => $userId],
             [
             'first_name' => $data->first_name,
@@ -28,6 +42,11 @@ class UserProfileRepository {
             'date_of_birth' => $data->date_of_birth ?? null,
             'address' => $data->address
         ]);
+    }
+
+    public function sendWelcomeEmail(UserProfile $userProfile): void
+    {
+        Mail::to($userProfile->user->email)->queue(new WelcomeEmail($userProfile));
     }
 
 

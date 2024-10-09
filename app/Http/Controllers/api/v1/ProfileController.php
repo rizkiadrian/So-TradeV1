@@ -49,6 +49,10 @@ class ProfileController extends Controller
         // Attempt to create the user
         return $this->userProfileRepository->create($userData);
     });
+    // Send welcome email
+    if ($result->wasRecentlyCreated) {
+        $this->userProfileRepository->sendWelcomeEmail($result);
+    }
 
     return ApiResponse::success($result, 'User Profile created successfully', 201);
 

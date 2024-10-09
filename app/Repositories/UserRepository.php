@@ -9,6 +9,17 @@ use Illuminate\Support\Facades\Auth;
 use App\Enums\TokenAbility;
 
 class UserRepository {
+    protected $model;
+
+    /**
+     * Constructor.
+     *
+     * @param User $model The user model that will be used to interact with the database.
+     */
+    public function __construct(User $model)
+    {
+        $this->model = $model;
+    }
     /**
      * Find a user by the given email address.
      *
@@ -16,7 +27,7 @@ class UserRepository {
      * @return User
      */
     public function findByEmail(string $email): User {
-        return User::where('email', $email)->first();
+        return $this->model->where('email', $email)->first();
     }
 
     /**
@@ -26,7 +37,7 @@ class UserRepository {
      * @return User
      */
     public function create($data): User {
-        return User::create([
+        return $this->model->create([
             'name' => $data->name,
             'email' => $data->email,
             'password' => Hash::make($data->password)
