@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign Key
             $table->text('financial_goals');
+            $table->timestamps(); // Created at and Updated at
         });
     }
 

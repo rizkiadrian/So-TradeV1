@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign Key
             $table->string('current_financial_issues'); // Changed to string for file path
+            $table->timestamps(); // Created at and Updated at
         });
     }
 

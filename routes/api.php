@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function() {
     Route::middleware(['auth:sanctum'])->group(function() {
         Route::get('/test-protected-route', [InfoController::class, 'testProtectedRoute']);
         Route::post('/profile/make', [ProfileController::class, 'profileCreate']);
+        Route::post('/profile/employment-make', [ProfileController::class, 'employmentCreate']);
     });
 
     // Check financial user middleware

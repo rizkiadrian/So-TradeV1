@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('household_size')->nullable();
             $table->decimal('monthly_expenses', 15, 2)->nullable();
             $table->decimal('savings_amount', 15, 2)->nullable();
+            $table->timestamps(); // Created at and Updated at
         });
     }
 

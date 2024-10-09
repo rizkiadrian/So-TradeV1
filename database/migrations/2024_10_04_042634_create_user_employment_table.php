@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign Key
             $table->string('employment_status'); // Make sure this is a string for enum storage
+            $table->timestamps(); // Created at and Updated at
         });
     }
 
