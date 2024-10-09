@@ -7,17 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserProfileRequest;
 use App\Http\Requests\UserEmploymentRequest;
 use App\Http\Requests\UserFinancialRequest;
+use App\Http\Requests\UserGoalRequest;
 
 use App\Http\Responses\ApiResponse;
 use App\Repositories\UserProfileRepository;
 use App\Repositories\UserEmploymentRepository;
 use App\Repositories\UserFinancialRepository;
+use App\Repositories\UserGoalRepository;
 
 class ProfileController extends Controller
 {
     protected $userProfileRepository;
     protected $userEmploymentRepository;
     protected $userFinancialRepository;
+    protected $userGoalRepository;
 
     /**
      * Dependency injection via constructor.
@@ -27,12 +30,14 @@ class ProfileController extends Controller
     public function __construct(
         UserProfileRepository $userProfileRepository,
         UserEmploymentRepository $userEmploymentRepository,
-        UserFinancialRepository $userFinancialRepository
+        UserFinancialRepository $userFinancialRepository,
+        UserGoalRepository $userGoalRepository
         ) 
     {
         $this->userProfileRepository = $userProfileRepository;
         $this->userEmploymentRepository = $userEmploymentRepository;
         $this->userFinancialRepository = $userFinancialRepository;
+        $this->userGoalRepository = $userGoalRepository;
     }
     public function index()
     {
@@ -112,5 +117,20 @@ class ProfileController extends Controller
         });
 
         return ApiResponse::success($result, 'User Financial created successfully', 201);
+    }
+
+    public function goalCreate(UserGoalRequest $request)
+    {
+        // Create an object from the validated request data
+        $goalData = (object) $request->validated();
+
+        $result = TransactionHelper::execute(function () use ($goalData) {
+            // Attempt to create the user
+                return $this->userGoalRepository->create($goalData);
+        });
+
+        return ApiResponse::success($result, 'User Goal created successfully', 201);
+
+
     }
 }

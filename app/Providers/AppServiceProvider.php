@@ -16,6 +16,9 @@ use App\Models\UserEmployment;
 use App\Repositories\UserFinancialRepository;
 use App\Models\UserFinancial;
 
+use App\Repositories\UserGoalRepository;
+use App\Models\UserGoal;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +26,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        //Bind UserGoalRepository
+        $this->app->bind(UserGoalRepository::class, function($app)
+        {
+            return new UserGoalRepository(new UserGoal());
+        });
+        
         //Bind UserFinancialRepository
         $this->app->bind(UserFinancialRepository::class, function($app)
         {

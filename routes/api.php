@@ -26,6 +26,7 @@ Route::prefix('v1')->group(function() {
         Route::post('/profile/make', [ProfileController::class, 'profileCreate']);
         Route::post('/profile/employment-make', [ProfileController::class, 'employmentCreate']);
         Route::post('/profile/financial-make', [ProfileController::class, 'financialCreate']);
+        Route::post('/profile/goal-make', [ProfileController::class, 'goalCreate']);
     });
 
     // Check financial user middleware
