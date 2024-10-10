@@ -73,7 +73,7 @@ class User extends Authenticatable
      */
     public function finances()
     {
-        return $this->hasOne(UserFinance::class);
+        return $this->hasOne(UserFinancial::class);
     }
 
     /**
