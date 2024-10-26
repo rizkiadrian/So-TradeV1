@@ -21,6 +21,7 @@ services:
             OCTANE_SERVER: 'swoole'
         volumes:
             - '.:/var/www/html'
+            - './supervisor.conf:/etc/supervisor/conf.d/supervisor.conf' # Mount Supervisor config
         networks:
             - sail
         depends_on:

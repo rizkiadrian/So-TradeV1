@@ -20,14 +20,24 @@ class UserGoalRepository {
     }
     
     
+    /**
+     * Create a new user goal.
+     * 
+     * This method creates a new user goal if one does not already exist for the currently authenticated user.
+     * 
+     * @param object $data Data to use for creating the user goal. At least 'financial_goals' must be present.
+     * 
+     * @return UserGoal
+     */
     public function create($data): UserGoal {
         $userId = Auth::user()->id;
         
-        return $this->model->firstOrCreate(
-            ['user_id' => $userId],
+        return $this->model->create(
             [
-            'financial_goals' => $data->financial_goals
-        ]);
+                'user_id' => $userId,
+                'financial_goals' => $data->financial_goals
+            ]
+        );
     }
 
 }

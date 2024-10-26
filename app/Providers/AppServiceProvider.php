@@ -19,6 +19,9 @@ use App\Models\UserFinancial;
 use App\Repositories\UserGoalRepository;
 use App\Models\UserGoal;
 
+use App\Repositories\UserFinancialIssueRepository;
+use App\Models\UserIssue;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Bind UserFinancialIssueRepository
+        $this->app->bind(UserFinancialIssueRepository::class, function($app) {
+            return new UserFinancialIssueRepository(new UserIssue());
+        });
+        
         //Bind UserGoalRepository
         $this->app->bind(UserGoalRepository::class, function($app)
         {
