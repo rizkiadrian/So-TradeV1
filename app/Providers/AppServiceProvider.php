@@ -22,6 +22,9 @@ use App\Models\UserGoal;
 use App\Repositories\UserFinancialIssueRepository;
 use App\Models\UserIssue;
 
+use App\Repositories\ContactRepository;
+use App\Models\Contact;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -59,6 +62,11 @@ class AppServiceProvider extends ServiceProvider
         // Bind UserRepository
         $this->app->bind(UserProfileRepository::class, function ($app) {
             return new UserProfileRepository(new UserProfile());
+        });
+
+        // Bind ContactRepository
+        $this->app->bind(ContactRepository::class, function ($app) {
+            return new ContactRepository(new Contact());
         });
     }
 

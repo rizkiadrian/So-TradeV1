@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\v1\InfoController;
 use App\Http\Controllers\api\v1\AuthController;
 use App\Http\Controllers\api\v1\ProfileController;
+use App\Http\Controllers\api\v1\ContactController;
 use App\Http\Middleware\CheckFinancialUser;
 
 Route::get('/user', function (Request $request) {
@@ -19,6 +20,7 @@ Route::prefix('v1')->group(function() {
     // Public Authentication routes
     Route::post('/auth/register', [AuthController::class, 'register']);
     Route::post('/auth/login', [AuthController::class, 'login']);
+    Route::post('/contact/create', [ContactController::class, 'create']);
 
     // Protected routes
     Route::middleware(['auth:sanctum'])->group(function() {
