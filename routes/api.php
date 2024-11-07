@@ -6,6 +6,7 @@ use App\Http\Controllers\api\v1\InfoController;
 use App\Http\Controllers\api\v1\AuthController;
 use App\Http\Controllers\api\v1\ProfileController;
 use App\Http\Controllers\api\v1\ContactController;
+use App\Http\Controllers\api\EntertainmentHub\PingController;
 use App\Http\Middleware\CheckFinancialUser;
 
 Route::get('/user', function (Request $request) {
@@ -37,4 +38,10 @@ Route::prefix('v1')->group(function() {
         Route::resource('profile', ProfileController::class)->only(['index']);
     });
 
+});
+
+Route::prefix('portfolio')->group(function() {
+    Route::prefix('entertainment-hub')->group(function() {
+        Route::get('/open-connection', [PingController::class, 'openConnection']);
+    });
 });
